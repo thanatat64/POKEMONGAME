@@ -10,5 +10,6 @@ public:
 	Enemy(Texture *texture,Vector2f pos,Vector2f size,float speed);
 	void update(float deltaTime);
 	void drawOn(RenderWindow* window);
+	inline Vector2f getPosition() {return shape.getPosition();}
 };
 
