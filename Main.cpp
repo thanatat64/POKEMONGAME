@@ -6,7 +6,7 @@ int main()
 	RenderWindow window(VideoMode(SCREEN_WIDTH,SCREEN_HEIGHT), "Game", Style::Titlebar | Style::Close);
 
 	Game game(&window);
-	
+	srand(time(0));
 
 	/*ต้องย้ายเข้า class barier--------------------------
 	RectangleShape tree1(Vector2f(220, 117.5));
@@ -23,7 +23,7 @@ int main()
 	ต้องย้ายเข้า class barier----------------------------*/
 
 	
-	float deltaTime = 0.0f;
+	float deltaTime = 0.0f;//คือเวลาที่ใช้ใน 1 frame
 	Clock clock;
 
 	while (window.isOpen())

@@ -16,3 +16,7 @@ inline Vector2f normalize(Vector2f v)
 	float length = sqrtf(v.x * v.x + v.y * v.y);
 	return (length != 0) ? v / length : v;
 }
+inline int randint(int start, int stop)
+{
+	return rand() % (stop - start + 1) + start;
+}
