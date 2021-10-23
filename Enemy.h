@@ -18,5 +18,8 @@ public:
 	inline Vector2f getSize() {return shape.getSize();}
 	void setEnemyTexture();
 	inline int getLevel() { return level; }
+	inline FloatRect getGlobalBounds() { return shape.getGlobalBounds(); }
+	inline void takeDamage(int damage) { hp -= damage; }
+	inline int getHp() { return hp; }
 };
 

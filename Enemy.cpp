@@ -10,7 +10,7 @@ Enemy::Enemy(Texture* texture, Vector2f pos, Vector2f size, float speed,int leve
 	this->hp = level;
 	if (level==3)
 	{
-		hp += 2;
+		hp += rand();
 	}
 	enemyTexture = texture;
 	setEnemyTexture();

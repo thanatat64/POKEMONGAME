@@ -1,21 +1,24 @@
 #pragma once
 #include "HeaderBundle.h"
 #include "Player.h"
-#include "Bullet.h"
 #include "Animation.h"
 #include "Enemy.h"
+#include "Ball.h"
 class Game
 {
 private :
 	RenderWindow* window; 
 	Player player;
-	Bullet bullet;
 	vector<Enemy> enemies;
+	vector<Ball> balls;
 	float spawnRate;
 	float currentSpawn;//lvl 1 2
 	float legendRate;
 	float legendSpawn;//legendary
+	float fireRate;
+	float fireSpawn;
 	Texture enemyTexture[3];
+	Texture ballTexture;
 	float inGameTime;
 	bool bossAlive;
 

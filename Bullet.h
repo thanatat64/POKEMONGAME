@@ -7,7 +7,7 @@ private:
 	CircleShape bullet;
 	bool active;
 	Texture bulletTexture;
-public :
+public:
 	inline Bullet(int radius = 15)
 	{
 		active = false;
@@ -17,9 +17,9 @@ public :
 	{
 		this->bullet.setRadius(radius);
 	}
-	inline void update(float deltaTime,Vector2f playerPos,Vector2f playerSize)
+	inline void update(float deltaTime, Vector2f playerPos, Vector2f playerSize)
 	{
-		if (Keyboard::isKeyPressed(Keyboard:: Space) && !active)
+		if (Keyboard::isKeyPressed(Keyboard::Space) && !active)
 		{
 			active = true;
 			bullet.setPosition(Vector2f(playerPos.x + (playerSize.x / 2) - bullet.getRadius(), playerPos.y));
@@ -27,7 +27,7 @@ public :
 
 		if (active)
 		{
-			bullet.move(Vector2f(0, -1) * 500.f *  deltaTime);
+			bullet.move(Vector2f(0, -1) * 500.f * deltaTime);
 			if (bullet.getPosition().y < 0)
 			{
 				active = false;
@@ -45,7 +45,7 @@ public :
 		if (active)
 		{
 			window->draw(bullet);
-		}	
+		}
 	}
 
 	inline void setTexture()
@@ -54,4 +54,3 @@ public :
 		bullet.setTexture(&bulletTexture);
 	}
 };
-
