@@ -4,9 +4,12 @@ class Enemy
 {
 private:
 	RectangleShape shape;
-	float speed;
 	Texture *enemyTexture;
 	Vector2u enemyTextureSize;
+
+	Vector2f direction;
+
+	float speed;
 	int level;
 	int hp;
 	//ทำระบบค่อยใส่เพิ่ม ex coin damage

@@ -8,9 +8,15 @@ Enemy::Enemy(Texture* texture, Vector2f pos, Vector2f size, float speed,int leve
 	this->speed = speed;
 	this->level = level;
 	this->hp = level;
-	if (level==3)
+	direction = Vector2f(0, 1);
+	if (level == 1)
 	{
-		hp += rand();
+		direction.x = randint(-1, 1);
+	}
+
+	if (level == 3)
+	{
+		hp += 7;
 	}
 	enemyTexture = texture;
 	setEnemyTexture();
@@ -18,7 +24,17 @@ Enemy::Enemy(Texture* texture, Vector2f pos, Vector2f size, float speed,int leve
 
 void Enemy::update(float deltaTime)
 {
-	shape.move(Vector2f(0, 1) * speed * deltaTime);
+	shape.move(normalize(direction) * speed * deltaTime);
+	if (shape.getPosition().x < 80)
+	{
+		shape.setPosition(Vector2f(80, shape.getPosition().y));
+		direction.x = -direction.x;
+	}
+	if (shape.getPosition().x >1050)
+	{
+		shape.setPosition(Vector2f(1050, shape.getPosition().y));
+		direction.x = -direction.x;
+	}
 }
 
 void Enemy::drawOn(RenderWindow* window)

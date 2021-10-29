@@ -41,12 +41,12 @@ public:
 			row = 1;
 			direction.x = -1;
 		}
-		if (Keyboard::isKeyPressed(Keyboard::W) && shape.getPosition().y /*>= 650*/ )
+		if (Keyboard::isKeyPressed(Keyboard::W) && shape.getPosition().y >= 400 )
 		{
 			row = 3;
 			direction.y = -1;
 		}
-		if (Keyboard::isKeyPressed(Keyboard::S) && shape.getPosition().y <= 900 - shape.getSize().y)
+		if (Keyboard::isKeyPressed(Keyboard::S) && shape.getPosition().y <= 680 - shape.getSize().y)
 		{
 			row = 0;
 			direction.y = 1;

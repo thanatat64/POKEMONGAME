@@ -3,7 +3,8 @@
 Game::Game(RenderWindow* window)
 {
 	this->window = window;
-	player.initialize(Vector2f(720, 700), Vector2f(90, 95), 250);
+	player.initialize(Vector2f(600, 550), Vector2f(90, 95), 250);
+
 	//Pokemon
 	spawnRate = 5;
 	currentSpawn = 0;
@@ -14,10 +15,35 @@ Game::Game(RenderWindow* window)
 	enemyTexture[2].loadFromFile("Textures/legendary.png");
 	inGameTime = 0;
 	bossAlive = false;
+
 	//BALL
-	fireRate = 1;
+	fireRate = 0.8;
 	fireSpawn = fireRate;
 	ballTexture.loadFromFile("Textures/pokeball.png");
+
+	//score
+	score = 0;
+	font.loadFromFile("font/Pokemon Solid.ttf");
+	textScore.setFont(font);
+	textScore.setFillColor(Color(64, 33, 28, 255));
+	textScore.setCharacterSize(30);
+	textScore.setPosition(Vector2f(30, 20));
+	textScore.setString("Score " + to_string(score));
+
+	//City HP
+	cityHP = 10;
+	HP.setFont(font);
+	HP.setFillColor(Color::White);
+	HP.setCharacterSize(25);
+	HP.setPosition(Vector2f(30, 60));
+	HP.setString("HP " + to_string(cityHP));
+	
+	//background foreground
+	background.loadFromFile("Textures/background.png");
+	bg.setTexture(background);
+	foreground.loadFromFile("Textures/foreground.png");
+	fg.setTexture(foreground);
+
 }
 
 //functions
@@ -25,6 +51,7 @@ void Game::update(float deltaTime)
 {
 	inGameTime += deltaTime;
 	player.update(deltaTime);
+
 
 #pragma region Ball
 	fireSpawn += deltaTime;
@@ -48,14 +75,16 @@ void Game::update(float deltaTime)
 	if (currentSpawn >= spawnRate && !bossAlive)
 	{
 		currentSpawn = 0;
-		if (inGameTime >= 5 && inGameTime <= 45)
+		if (inGameTime >= 5 && inGameTime <= 30)
 		{
-			enemies.push_back(Enemy(&enemyTexture[0], Vector2f(rand() % (SCREEN_WIDTH - 90), -95), Vector2f(70, 70), 100, 1));
+			enemies.push_back(Enemy(&enemyTexture[0], Vector2f(randint(100, 1020), -75), Vector2f(70, 75), 200, 1));
+			enemies.push_back(Enemy(&enemyTexture[0], Vector2f(randint(100, 1020), -75), Vector2f(70, 75), 200, 1));
+			enemies.push_back(Enemy(&enemyTexture[0], Vector2f(randint(100, 1020), -75), Vector2f(70, 75), 150, 1));
 		}
-		else if (inGameTime >= 45)
+		else if (inGameTime >= 30)
 		{
 			int lvl = rand() % 2;
-			enemies.push_back(Enemy(&enemyTexture[lvl], Vector2f(rand() % (SCREEN_WIDTH - 90), -95), Vector2f(90, 95), 100, lvl + 1));
+			enemies.push_back(Enemy(&enemyTexture[lvl], Vector2f(randint(100, 1020), -75), Vector2f(70, 75), 150, lvl + 1));
 		}
 	}
 
@@ -63,10 +92,11 @@ void Game::update(float deltaTime)
 	if (legendSpawn >= legendRate && inGameTime >= 60)
 	{
 		legendSpawn = 0;
-		enemies.push_back(Enemy(&enemyTexture[2], Vector2f(rand() % (SCREEN_WIDTH - 180), -185), Vector2f(180, 185), 50, 3));
+		enemies.push_back(Enemy(&enemyTexture[2], Vector2f(520, -185), Vector2f(180, 185), 50, 3));
 		legendRate = randint(40, 60);
 		bossAlive = true;
 	}
+
 	for (size_t e = 0; e < enemies.size(); e++) // รัน enemy ทุกตัว
 	{
 		enemies[e].update(deltaTime);
@@ -85,6 +115,16 @@ void Game::update(float deltaTime)
 			{
 				bossAlive = false;
 			}
+			if (enemies[e].getHp() <= 0)
+			{
+				score += 10;
+				textScore.setString("Score " + to_string(score));
+			}
+			else if (enemies[e].getPosition().y > SCREEN_HEIGHT)
+			{
+				cityHP -= 1;
+				HP.setString("HP " + to_string(cityHP));
+			}
 			enemies.erase(enemies.begin() + e);
 			continue;
 		}
@@ -94,6 +134,7 @@ void Game::update(float deltaTime)
 
 void Game::render()
 {
+	window->draw(bg);
 	player.drawOn(window);
 	// render ball
 	for (size_t i = 0; i < balls.size(); i++)
@@ -105,4 +146,8 @@ void Game::render()
 	{
 		enemies.at(i).drawOn(window);
 	}
+	window->draw(fg);
+	//render score&HP
+	window->draw(textScore);
+	window->draw(HP);
 }

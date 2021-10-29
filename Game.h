@@ -8,19 +8,38 @@ class Game
 {
 private :
 	RenderWindow* window; 
+	Sprite bg;
+	Texture background;
+	Sprite fg;
+	Texture foreground;
+
+	float inGameTime;
+	bool bossAlive;
+
 	Player player;
+	
+	//Enemy
 	vector<Enemy> enemies;
-	vector<Ball> balls;
 	float spawnRate;
 	float currentSpawn;//lvl 1 2
 	float legendRate;
 	float legendSpawn;//legendary
+	Texture enemyTexture[3];
+	
+	//ball
+	vector<Ball> balls;
 	float fireRate;
 	float fireSpawn;
-	Texture enemyTexture[3];
 	Texture ballTexture;
-	float inGameTime;
-	bool bossAlive;
+
+	//score
+	int score;
+	Font font;
+	Text textScore;
+
+	//city HP
+	int cityHP;
+	Text HP;
 
 	//Vector2u enemyTextureSize;
 public :

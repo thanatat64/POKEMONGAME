@@ -8,21 +8,6 @@ int main()
 	Game game(&window);
 	srand(time(0));
 
-	/*ต้องย้ายเข้า class barier--------------------------
-	RectangleShape tree1(Vector2f(220, 117.5));
-	tree1.setPosition(150, 550);
-	Texture Treetexture;
-	Treetexture.loadFromFile("Textures/tree.png");
-	tree1.setTexture(&Treetexture);
-
-	RectangleShape tree2(Vector2f(220, 117.5));
-	tree2.setPosition(820, 550);
-	Texture Tree2texture;
-	Tree2texture.loadFromFile("Textures/tree.png");
-	tree2.setTexture(&Tree2texture);
-	ต้องย้ายเข้า class barier----------------------------*/
-
-	
 	float deltaTime = 0.0f;//คือเวลาที่ใช้ใน 1 frame
 	Clock clock;
 
@@ -48,7 +33,7 @@ int main()
 			}
 		}
 		game.update(deltaTime);
-		window.clear(Color(88, 186, 145, 255));
+		window.clear();
 		game.render();
 		window.display();
 	}
