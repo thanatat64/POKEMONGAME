@@ -9,7 +9,7 @@ Enemy::Enemy(Texture* texture, Vector2f pos, Vector2f size, float speed,int leve
 	this->level = level;
 	this->hp = level;
 	direction = Vector2f(0, 1);
-	if (level == 1)
+	if (level == 1 || level == 2)
 	{
 		direction.x = randint(-1, 1);
 	}

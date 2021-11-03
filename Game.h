@@ -30,7 +30,9 @@ private :
 	vector<Ball> balls;
 	float fireRate;
 	float fireSpawn;
-	Texture ballTexture;
+	Texture pokeballTexture;
+	Texture ultraballTexture;
+	Texture masterballTexture;
 
 	//score
 	int score;

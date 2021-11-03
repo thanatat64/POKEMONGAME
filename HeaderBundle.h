@@ -20,3 +20,10 @@ inline int randint(int start, int stop)
 {
 	return rand() % (stop - start + 1) + start;
 }
+inline Texture swapball(Texture a, Texture b)
+{
+	Texture c;
+	c = b;
+	b = a;
+	a = c;
+}

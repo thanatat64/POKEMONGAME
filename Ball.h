@@ -3,9 +3,14 @@
 class Ball
 {
 private :
+	//pokeball
 	CircleShape shape;
-	float speed;
 	Texture *ballTexture;
+	//ultraball
+	
+	//masterball
+
+	float speed;
 	int damage;
 public :
 	Ball(Texture* texture,float speed,int size, Vector2f playerPos, Vector2f playerSize,int damage);

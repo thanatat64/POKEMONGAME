@@ -19,7 +19,9 @@ Game::Game(RenderWindow* window)
 	//BALL
 	fireRate = 0.8;
 	fireSpawn = fireRate;
-	ballTexture.loadFromFile("Textures/pokeball.png");
+	pokeballTexture.loadFromFile("Textures/pokeball.png");
+	ultraballTexture.loadFromFile("Textures/ultraball.png");
+	masterballTexture.loadFromFile("Textures/masterball.png");
 
 	//score
 	score = 0;
@@ -31,7 +33,7 @@ Game::Game(RenderWindow* window)
 	textScore.setString("Score " + to_string(score));
 
 	//City HP
-	cityHP = 10;
+	cityHP = 5;
 	HP.setFont(font);
 	HP.setFillColor(Color::White);
 	HP.setCharacterSize(25);
@@ -55,11 +57,34 @@ void Game::update(float deltaTime)
 
 #pragma region Ball
 	fireSpawn += deltaTime;
-	if (Keyboard::isKeyPressed(Keyboard::Space) && fireSpawn >= fireRate)
+	/*if (Keyboard::isKeyPressed(Keyboard::R))
+	{
+		if (&pokeballTexture)
+		{
+			swapball(pokeballTexture, ultraballTexture);
+		}
+	}*/
+	//pokeball
+	if (Keyboard::isKeyPressed(Keyboard::J) && fireSpawn >= fireRate)
 	{
 		fireSpawn = 0;
-		balls.push_back(Ball(&ballTexture, 100, 15, player.getPosition(), player.getSize(), 1));
+		balls.push_back(Ball(&pokeballTexture, 100, 15, player.getPosition(), player.getSize(), 1));
 	}
+
+	//ultraball
+	if (Keyboard::isKeyPressed(Keyboard::K) && fireSpawn >= fireRate)
+	{
+		fireSpawn = 0;
+		balls.push_back(Ball(&ultraballTexture, 100, 15, player.getPosition(), player.getSize(), 2));
+	}
+
+	//masterball
+	if (Keyboard::isKeyPressed(Keyboard::L) && fireSpawn >= fireRate)
+	{
+		fireSpawn = 0;
+		balls.push_back(Ball(&masterballTexture, 100, 15, player.getPosition(), player.getSize(), 10));
+	}
+	
 	for (size_t b = 0; b < balls.size(); b++)
 	{
 		balls[b].update(deltaTime);
@@ -81,10 +106,16 @@ void Game::update(float deltaTime)
 			enemies.push_back(Enemy(&enemyTexture[0], Vector2f(randint(100, 1020), -75), Vector2f(70, 75), 200, 1));
 			enemies.push_back(Enemy(&enemyTexture[0], Vector2f(randint(100, 1020), -75), Vector2f(70, 75), 150, 1));
 		}
-		else if (inGameTime >= 30)
+		else if (inGameTime >= 30 && inGameTime <= 60)
 		{
 			int lvl = rand() % 2;
 			enemies.push_back(Enemy(&enemyTexture[lvl], Vector2f(randint(100, 1020), -75), Vector2f(70, 75), 150, lvl + 1));
+		}
+		else if (inGameTime >= 60)
+		{
+			int lvl = rand() % 2;
+			enemies.push_back(Enemy(&enemyTexture[lvl], Vector2f(randint(100, 1020), -75), Vector2f(70, 75), 150, lvl + 1));
+			enemies.push_back(Enemy(&enemyTexture[0], Vector2f(randint(100, 1020), -75), Vector2f(70, 75), 200, 1));
 		}
 	}
 
