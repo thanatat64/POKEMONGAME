@@ -12,6 +12,8 @@ private :
 	Texture background;
 	Sprite fg;
 	Texture foreground;
+	Sprite ballMenu;
+	Texture isballmenu;
 
 	float inGameTime;
 	bool bossAlive;
@@ -42,6 +44,14 @@ private :
 	//city HP
 	int cityHP;
 	Text HP;
+
+	//ballcount
+	int ultraballCount;
+	int masterballCount;
+	Text ulCount;
+	Text masCount;
+	Sprite infinity;
+	Texture isInfinity;
 
 	//Vector2u enemyTextureSize;
 public :

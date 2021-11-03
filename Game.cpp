@@ -46,6 +46,27 @@ Game::Game(RenderWindow* window)
 	foreground.loadFromFile("Textures/foreground.png");
 	fg.setTexture(foreground);
 
+	//ballmenu
+	ultraballCount = 10;
+	masterballCount = 2;
+	isballmenu.loadFromFile("Textures/ballMenu2.png");
+	ballMenu.setTexture(isballmenu);
+	ballMenu.setPosition(Vector2f(30,100));
+	isInfinity.loadFromFile("Textures/infinity2.png");
+	infinity.setTexture(isInfinity);
+	infinity.setPosition(Vector2f(75, 107));
+	//infinity.setScale(40,20);
+	ulCount.setFont(font);
+	ulCount.setFillColor(Color::White);
+	ulCount.setCharacterSize(20);
+	ulCount.setPosition(Vector2f(75, 137));
+	ulCount.setString( to_string(ultraballCount));
+	masCount.setFont(font);
+	masCount.setFillColor(Color::White);
+	masCount.setCharacterSize(20);
+	masCount.setPosition(Vector2f(75, 168));
+	masCount.setString( to_string(masterballCount));
+	
 }
 
 //functions
@@ -72,17 +93,27 @@ void Game::update(float deltaTime)
 	}
 
 	//ultraball
-	if (Keyboard::isKeyPressed(Keyboard::K) && fireSpawn >= fireRate)
+	else if (Keyboard::isKeyPressed(Keyboard::K) && fireSpawn >= fireRate)
 	{
 		fireSpawn = 0;
+		if (ultraballCount > 0)
+		{
+		ultraballCount--;
 		balls.push_back(Ball(&ultraballTexture, 100, 15, player.getPosition(), player.getSize(), 2));
+		}
+		ulCount.setString(to_string(ultraballCount));
 	}
 
 	//masterball
-	if (Keyboard::isKeyPressed(Keyboard::L) && fireSpawn >= fireRate)
+	else if (Keyboard::isKeyPressed(Keyboard::L) && fireSpawn >= fireRate)
 	{
 		fireSpawn = 0;
+		if (masterballCount > 0)
+		{
+		masterballCount--;
 		balls.push_back(Ball(&masterballTexture, 100, 15, player.getPosition(), player.getSize(), 10));
+		}
+		masCount.setString(to_string(masterballCount));
 	}
 	
 	for (size_t b = 0; b < balls.size(); b++)
@@ -179,6 +210,10 @@ void Game::render()
 	}
 	window->draw(fg);
 	//render score&HP
+	window->draw(ballMenu);
 	window->draw(textScore);
 	window->draw(HP);
+	window->draw(infinity);
+	window->draw(ulCount);
+	window->draw(masCount);
 }
