@@ -3,13 +3,8 @@
 class Ball
 {
 private :
-	//pokeball
 	CircleShape shape;
 	Texture *ballTexture;
-	//ultraball
-	
-	//masterball
-
 	float speed;
 	int damage;
 public :

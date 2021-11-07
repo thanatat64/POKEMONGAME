@@ -12,6 +12,7 @@ private:
 	float speed;
 	int level;
 	int hp;
+	int hpMax;
 	//ทำระบบค่อยใส่เพิ่ม ex coin damage
 public:
 	Enemy(Texture *texture,Vector2f pos,Vector2f size,float speed,int level);
@@ -24,5 +25,7 @@ public:
 	inline FloatRect getGlobalBounds() { return shape.getGlobalBounds(); }
 	inline void takeDamage(int damage) { hp -= damage; }
 	inline int getHp() { return hp; }
+	int getHpMax();
+	
 };
 

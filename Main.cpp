@@ -9,11 +9,12 @@ int main()
 	srand(time(0));
 
 	float deltaTime = 0.0f;//คือเวลาที่ใช้ใน 1 frame
+	bool running = true;
 	Clock clock;
 
 	while (window.isOpen())
 	{
-		deltaTime = clock.restart().asSeconds();
+		deltaTime = clock.restart().asSeconds() * running;
 		Event ev;
 		while (window.pollEvent(ev))
 		{
@@ -24,6 +25,10 @@ int main()
 				if (ev.key.code == Keyboard::Escape)
 				{
 					window.close();
+				}
+				else if (ev.key.code == Keyboard::P)
+				{
+					running = !running;
 				}
 			}
 			else if (ev.type == Event::TextEntered)

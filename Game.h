@@ -4,6 +4,7 @@
 #include "Animation.h"
 #include "Enemy.h"
 #include "Ball.h"
+#include "Item.h"
 class Game
 {
 private :
@@ -41,6 +42,10 @@ private :
 	Font font;
 	Text textScore;
 
+	//enemyHP
+	Text enemyHP;
+	Text HpDown;
+
 	//city HP
 	int cityHP;
 	Text HP;
@@ -53,9 +58,19 @@ private :
 	Sprite infinity;
 	Texture isInfinity;
 
+	//Item
+	vector<Item>SpBoosts;
+	Sprite sBoost;
+	Texture sBoostTexture;
+	vector<Item>getUltraballs;
+	vector<Item>getMasterballs;
+	
+
 	//Vector2u enemyTextureSize;
 public :
 	Game(RenderWindow* window);
+	void UpdateEnemyHP(int index);
+	void UpdateEnemyHpDown(int index);
 	void update(float deltaTime);
 	void render();
 };

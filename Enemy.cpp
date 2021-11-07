@@ -71,3 +71,20 @@ void Enemy::setEnemyTexture()
 		cout << "Set level" << endl;
 	}
 }
+
+int Enemy::getHpMax()
+{
+	if (level == 1)
+	{
+		hpMax = 1;
+	}
+	if (level == 2)
+	{
+		hpMax = 2;
+	}
+	if (level == 3)
+	{
+		hpMax = 10;
+	}
+	return hpMax;
+}

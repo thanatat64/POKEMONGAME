@@ -12,13 +12,19 @@ private:
 	Texture playerTexture;
 	Animation animation;
 	int row;
+
+	float speedBoost;
+	float spdBtDuration;
 public:
-	inline Player(Vector2f position=Vector2f(0,0), Vector2f size= Vector2f(90, 95), float speed=250)
+	inline Player(Vector2f position = Vector2f(0, 0), Vector2f size = Vector2f(90, 95), float speed = 450)
 	{
 		this->shape.setPosition(position);
 		this->shape.setSize(size);
 		this->speed = speed;
 		row = 0;
+		spdBtDuration = 0;
+		speedBoost = speed * 1.5;
+
 		setTextureAndAnimation();
 	}
 	inline void initialize(Vector2f position, Vector2f size, float speed)
@@ -27,21 +33,22 @@ public:
 		this->shape.setSize(size);
 		this->speed = speed;
 	}
+	inline void setBoost(float sec) { spdBtDuration = sec; }
 	inline void update(float deltaTime)
 	{
-		
+
 		direction = Vector2f(0, 0);
 		if (Keyboard::isKeyPressed(Keyboard::D) && shape.getPosition().x <= 1200 - shape.getSize().x)
 		{
 			row = 2;
 			direction.x = 1;
 		}
-		if (Keyboard::isKeyPressed(Keyboard::A) && shape.getPosition().x >=0 )
+		if (Keyboard::isKeyPressed(Keyboard::A) && shape.getPosition().x >= 0)
 		{
 			row = 1;
 			direction.x = -1;
 		}
-		if (Keyboard::isKeyPressed(Keyboard::W) && shape.getPosition().y >= 400 )
+		if (Keyboard::isKeyPressed(Keyboard::W) && shape.getPosition().y >= 400)
 		{
 			row = 3;
 			direction.y = -1;
@@ -51,7 +58,15 @@ public:
 			row = 0;
 			direction.y = 1;
 		}
-		velocity = normalize(direction) * speed * deltaTime;
+		if (spdBtDuration > 0)
+		{
+			spdBtDuration -= deltaTime;
+			velocity = normalize(direction) * speedBoost * deltaTime;
+		}
+		else
+		{
+			velocity = normalize(direction) * speed * deltaTime;
+		}
 		shape.move(velocity);
 		//animation update
 		if (velocity == Vector2f() && row < 4)
@@ -62,7 +77,7 @@ public:
 		shape.setTextureRect(animation.uvRect);
 	}
 
-	inline void drawOn(RenderWindow *window)
+	inline void drawOn(RenderWindow* window)
 	{
 		window->draw(shape);
 	}
@@ -76,7 +91,7 @@ public:
 	{
 		return shape.getGlobalBounds();
 	}
-	
+
 	inline Vector2f getSize()
 	{
 		return shape.getSize();

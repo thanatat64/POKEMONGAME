@@ -38,6 +38,10 @@ void Animation::initialize(Texture* texture, Vector2u imageCount, float switchTi
 
 void Animation::update(int row, float deltatime)
 {
+	if (deltatime == 0)
+	{
+		return;
+	}
 	currentImage.y = row;
 	totalTime += deltatime;
 
