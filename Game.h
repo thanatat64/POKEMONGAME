@@ -5,7 +5,8 @@
 #include "Enemy.h"
 #include "Ball.h"
 #include "Item.h"
-class Game
+#include "Scene.h"
+class Game : public Scene
 {
 private :
 	RenderWindow* window; 
@@ -18,6 +19,7 @@ private :
 
 	float inGameTime;
 	bool bossAlive;
+	bool gameOver;
 
 	Player player;
 	
@@ -73,5 +75,7 @@ public :
 	void UpdateEnemyHpDown(int index);
 	void update(float deltaTime);
 	void render();
+	void reset();
+	void goToMenu();
 };
 

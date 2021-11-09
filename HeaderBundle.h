@@ -11,6 +11,8 @@
 using namespace std;
 using namespace sf;
 
+extern float multiplier;
+
 inline Vector2f normalize(Vector2f v)
 {
 	float length = sqrtf(v.x * v.x + v.y * v.y);

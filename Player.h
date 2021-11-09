@@ -32,6 +32,7 @@ public:
 		this->shape.setPosition(position);
 		this->shape.setSize(size);
 		this->speed = speed;
+
 	}
 	inline void setBoost(float sec) { spdBtDuration = sec; }
 	inline void update(float deltaTime)
@@ -102,5 +103,9 @@ public:
 		playerTexture.loadFromFile("Textures/pokemontrainer.png");
 		shape.setTexture(&playerTexture);
 		animation.initialize(&playerTexture, Vector2u(4, 8), 0.15f);
+	}
+	inline void clear(RenderWindow* window)
+	{
+		window->clear();
 	}
 };

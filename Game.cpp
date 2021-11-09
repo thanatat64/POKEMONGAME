@@ -14,6 +14,7 @@ Game::Game(RenderWindow* window)
 	enemyTexture[2].loadFromFile("Textures/legendary.png");
 	inGameTime = 0;
 	bossAlive = false;
+	gameOver = false;
 #pragma endregion
 #pragma region BALL
 	fireRate = 0.8;
@@ -278,6 +279,14 @@ void Game::update(float deltaTime)
 			{
 				cityHP -= 1;
 				HP.setString("HP " + to_string(cityHP));
+				if (cityHP == 0)
+				{
+					gameOver = true;
+				}
+				if (gameOver)
+				{
+					goToMenu();
+				}
 			}
 			enemies.erase(enemies.begin() + e);
 			continue;
@@ -327,6 +336,53 @@ void Game::render()
 	window->draw(infinity);
 	window->draw(ulCount);
 	window->draw(masCount);
+}
+
+void Game::reset()
+{
+	spawnRate = 5;
+	currentSpawn = 0;
+	legendRate = 10;
+	legendSpawn = 0;
+	inGameTime = 0;
+	bossAlive = false;
+
+	fireRate = 0.8;
+	fireSpawn = fireRate;
+
+	score = 0;
+	textScore.setPosition(Vector2f(30, 20));
+	textScore.setString("Score " + to_string(score));
+
+	cityHP = 10;
+	HP.setPosition(Vector2f(30, 60));
+	HP.setString("HP " + to_string(cityHP));
+
+	ultraballCount = 0;
+	masterballCount = 0;
+
+	ballMenu.setPosition(Vector2f(30, 100));
+	infinity.setPosition(Vector2f(75, 107));
+	ulCount.setPosition(Vector2f(75, 137));
+	ulCount.setString(to_string(ultraballCount));
+	masCount.setPosition(Vector2f(75, 168));
+	masCount.setString(to_string(masterballCount));
+
+	player.initialize(Vector2f(600, 550), Vector2f(90, 95), 350);
+	enemies.clear();
+	balls.clear();
+	SpBoosts.clear();
+	getUltraballs.clear();
+	getMasterballs.clear();
+
+	
+	inGameTime = 0;
+	
+}
+
+void Game::goToMenu()
+{
+	Scene::index = 0;
 }
 
 
