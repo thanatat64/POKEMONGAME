@@ -9,11 +9,6 @@ Ball::Ball(Texture* texture,float speed,int size, Vector2f playerPos, Vector2f p
 	this->damage = damage;
 }
 
-void Ball::update(float deltaTime)
-{
-	shape.move(Vector2f(0, -1) * 500.f * deltaTime);
-}
-
 void Ball::drawOn(RenderWindow* window)
 {
 	window->draw(shape);

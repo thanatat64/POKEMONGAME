@@ -6,6 +6,7 @@
 #include "Ball.h"
 #include "Item.h"
 #include "Scene.h"
+#include "Textbox.h"
 class Game : public Scene
 {
 private :
@@ -16,12 +17,16 @@ private :
 	Texture foreground;
 	Sprite ballMenu;
 	Texture isballmenu;
+	Sprite showGameOver;
+	Texture gameOverBG;
 
 	float inGameTime;
 	bool bossAlive;
 	bool gameOver;
 
 	Player player;
+	
+	Textbox textbox;
 	
 	//Enemy
 	vector<Enemy> enemies;
@@ -42,6 +47,7 @@ private :
 	//score
 	int score;
 	Font font;
+	Font pixelFont;
 	Text textScore;
 
 	//enemyHP
@@ -77,5 +83,10 @@ public :
 	void render();
 	void reset();
 	void goToMenu();
+	void checkSelect();
+	inline void TextEnter(Event event)
+	{
+		textbox.typedOn(event);
+	}
 };
 

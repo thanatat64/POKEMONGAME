@@ -1,5 +1,7 @@
 #pragma once
-#include "HeaderBundle.h"
+#include <iostream>
+#include <SFML/Graphics.hpp>
+
 using namespace sf;
 using namespace std;
 

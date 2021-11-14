@@ -23,7 +23,7 @@ public:
 		this->speed = speed;
 		row = 0;
 		spdBtDuration = 0;
-		speedBoost = speed * 1.5;
+		speedBoost = speed * 1.35;
 
 		setTextureAndAnimation();
 	}

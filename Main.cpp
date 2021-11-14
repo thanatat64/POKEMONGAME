@@ -8,12 +8,11 @@ using namespace sf;
 using namespace std;
 
 float multiplier = 1;
-
+vector<Event> textEvents = {};
 int main()
 {
 	RenderWindow window(VideoMode(SCREEN_WIDTH,SCREEN_HEIGHT), "Game", Style::Titlebar | Style::Close);
 	srand(time(0));
-
 	Game game(&window);
 	Menu menu(&window,&game);
 
@@ -26,6 +25,7 @@ int main()
 
 	while (window.isOpen())
 	{
+		textEvents.clear();
 		deltaTime = clock.restart().asSeconds() * multiplier;
 		Event ev;
 		while (window.pollEvent(ev))
@@ -43,10 +43,19 @@ int main()
 					multiplier = !multiplier;
 				}
 			}
+			else if (ev.type == Event::LostFocus)
+			{
+				multiplier = 0;
+			}
+			else if (ev.type == Event::GainedFocus)
+			{
+				multiplier = 1;
+			}
+
 			else if (ev.type == Event::TextEntered)
 			{
-				//cout << char(ev.text.unicode);
-				//เอาไว้ใช่ตอนพิมชื่อ
+				cout << char(ev.text.unicode);
+				textEvents.push_back(ev);
 			}
 		}
 		sceneManagement[Scene::index]->update(deltaTime);

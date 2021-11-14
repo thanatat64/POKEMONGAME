@@ -43,12 +43,13 @@ Game::Game(RenderWindow* window)
 	textScore.setString("Score " + to_string(score));
 
 	//HP
-	enemyHP.setFont(font);
+	pixelFont.loadFromFile("font/pixel.ttf");
+	enemyHP.setFont(pixelFont);
 	enemyHP.setFillColor(Color::Black);
-	enemyHP.setCharacterSize(10);
+	enemyHP.setCharacterSize(15);
 
 	//City HP
-	cityHP = 10;
+	cityHP = 5;
 	HP.setFont(font);
 	HP.setFillColor(Color::White);
 	HP.setCharacterSize(25);
@@ -74,6 +75,14 @@ Game::Game(RenderWindow* window)
 	masCount.setCharacterSize(20);
 	masCount.setPosition(Vector2f(75, 168));
 	masCount.setString(to_string(masterballCount));
+
+	gameOverBG.loadFromFile("Textures/gameOver.png");
+	showGameOver.setTexture(gameOverBG);
+	textbox.setFont(pixelFont);
+	textbox.setPosition(Vector2f(350, 685));
+	textbox.setLimit(true, 10);
+	checkSelect();
+
 #pragma endregion
 }
 
@@ -230,7 +239,7 @@ void Game::update(float deltaTime)
 				balls.erase(balls.begin() + b);
 				if (enemies[e].getHp() <= 0)
 				{
-						int rate = randint(1, 2);
+					int rate = randint(1, 2);
 					if (enemies[e].getLevel() == 1)
 					{
 						if (rate == 1)
@@ -281,11 +290,16 @@ void Game::update(float deltaTime)
 				HP.setString("HP " + to_string(cityHP));
 				if (cityHP == 0)
 				{
+					multiplier = 0;
 					gameOver = true;
 				}
 				if (gameOver)
 				{
+					
+					if (Keyboard::isKeyPressed(Keyboard::Space))
+					{
 					goToMenu();
+					}
 				}
 			}
 			enemies.erase(enemies.begin() + e);
@@ -336,6 +350,8 @@ void Game::render()
 	window->draw(infinity);
 	window->draw(ulCount);
 	window->draw(masCount);
+	window->draw(showGameOver);
+	textbox.drawOn(*window);
 }
 
 void Game::reset()
@@ -346,6 +362,7 @@ void Game::reset()
 	legendSpawn = 0;
 	inGameTime = 0;
 	bossAlive = false;
+	gameOver = false;
 
 	fireRate = 0.8;
 	fireSpawn = fireRate;
@@ -354,7 +371,7 @@ void Game::reset()
 	textScore.setPosition(Vector2f(30, 20));
 	textScore.setString("Score " + to_string(score));
 
-	cityHP = 10;
+	cityHP = 5;
 	HP.setPosition(Vector2f(30, 60));
 	HP.setString("HP " + to_string(cityHP));
 
@@ -383,6 +400,19 @@ void Game::reset()
 void Game::goToMenu()
 {
 	Scene::index = 0;
+}
+
+void Game::checkSelect()
+{
+	if (Keyboard::isKeyPressed(Keyboard::Return))
+	{
+		textbox.setSelected(true);
+	}
+	else if (Keyboard::isKeyPressed(Keyboard::Escape))
+	{
+		textbox.setSelected(false);
+	}
+
 }
 
 

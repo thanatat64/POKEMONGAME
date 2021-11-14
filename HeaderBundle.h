@@ -1,6 +1,9 @@
 #pragma once
 #include <iostream>
+#include <time.h>
 #include <vector>
+#include <string>
+#include <sstream>
 #include <SFML/Graphics.hpp>
 #include <SFML/System.hpp>
 #include <SFML/Window.hpp>
@@ -8,6 +11,7 @@
 #include <SFML/Network.hpp>
 #define SCREEN_WIDTH 1200
 #define SCREEN_HEIGHT 900
+
 using namespace std;
 using namespace sf;
 
