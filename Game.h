@@ -6,7 +6,6 @@
 #include "Ball.h"
 #include "Item.h"
 #include "Scene.h"
-#include "Textbox.h"
 class Game : public Scene
 {
 private :
@@ -25,8 +24,10 @@ private :
 	bool gameOver;
 
 	Player player;
+	string playerName;
+	Text nameText;
 	
-	Textbox textbox;
+	Vector2f mousePos;
 	
 	//Enemy
 	vector<Enemy> enemies;
@@ -79,14 +80,10 @@ public :
 	Game(RenderWindow* window);
 	void UpdateEnemyHP(int index);
 	void UpdateEnemyHpDown(int index);
+	//void goToMenu(string str, int score, int scene);
 	void update(float deltaTime);
 	void render();
 	void reset();
-	void goToMenu();
-	void checkSelect();
-	inline void TextEnter(Event event)
-	{
-		textbox.typedOn(event);
-	}
+
 };
 

@@ -9,6 +9,7 @@
 #include <SFML/Window.hpp>
 #include <SFML/Audio.hpp>
 #include <SFML/Network.hpp>
+#include "LeaderBoard.h"
 #define SCREEN_WIDTH 1200
 #define SCREEN_HEIGHT 900
 
@@ -16,6 +17,7 @@ using namespace std;
 using namespace sf;
 
 extern float multiplier;
+extern vector<Event> textEvents;
 
 inline Vector2f normalize(Vector2f v)
 {

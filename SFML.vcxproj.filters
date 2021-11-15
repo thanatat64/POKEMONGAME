@@ -42,7 +42,7 @@
     <ClCompile Include="Scene.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Textbox.cpp">
+    <ClCompile Include="LeaderBoard.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -80,7 +80,7 @@
     <ClInclude Include="Scene.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Textbox.h">
+    <ClInclude Include="LeaderBoard.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

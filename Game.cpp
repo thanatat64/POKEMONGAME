@@ -78,10 +78,13 @@ Game::Game(RenderWindow* window)
 
 	gameOverBG.loadFromFile("Textures/gameOver.png");
 	showGameOver.setTexture(gameOverBG);
-	textbox.setFont(pixelFont);
-	textbox.setPosition(Vector2f(350, 685));
-	textbox.setLimit(true, 10);
-	checkSelect();
+
+	nameText.setFont(pixelFont);
+	nameText.setFillColor(Color::Black);
+	nameText.setCharacterSize(60);
+	nameText.setOrigin(Vector2f(nameText.getGlobalBounds().width, nameText.getGlobalBounds().height) / 2.f);
+	nameText.setPosition(600, 660);
+
 
 #pragma endregion
 }
@@ -89,7 +92,7 @@ Game::Game(RenderWindow* window)
 void Game::UpdateEnemyHP(int index)
 {
 	enemyHP.setPosition(enemies[index].getPosition().x, enemies[index].getPosition().y - 15.f);
-	enemyHP.setString("HP " +to_string(enemies[index].getHp()) + "/" +to_string(enemies[index].getHpMax()));
+	enemyHP.setString("HP " + to_string(enemies[index].getHp()) + "/" + to_string(enemies[index].getHpMax()));
 	HpDown.setPosition(enemies[index].getPosition().x, enemies[index].getPosition().y + 15.f);
 }
 void Game::UpdateEnemyHpDown(int index)
@@ -97,11 +100,15 @@ void Game::UpdateEnemyHpDown(int index)
 	HpDown.setString("- " + to_string(balls[index].getDamage()));
 }
 
+
 //functions
 void Game::update(float deltaTime)
 {
 	inGameTime += deltaTime;
 	player.update(deltaTime);
+	//mousePos = (Vector2f)Mouse::getPosition(*window);
+	//typeName.update(mousePos, goToMenu, typeName.getString(), score, 0);//พอเป็นของเกม แล้ว แดง
+
 #pragma region Ball
 	fireSpawn += deltaTime;
 	//pokeball
@@ -244,7 +251,7 @@ void Game::update(float deltaTime)
 					{
 						if (rate == 1)
 						{
-						SpBoosts.push_back(Item(&sBoostTexture, 10, Vector2f(36.5, 36.5), enemies[e].getPosition()));
+							SpBoosts.push_back(Item(&sBoostTexture, 10, Vector2f(36.5, 36.5), enemies[e].getPosition()));
 						}
 					}
 					if (enemies[e].getLevel() == 2)
@@ -255,7 +262,7 @@ void Game::update(float deltaTime)
 					{
 						if (rate == 2)
 						{
-						getMasterballs.push_back(Item(&masterballTexture, 10, Vector2f(24, 24), enemies[e].getPosition()));
+							getMasterballs.push_back(Item(&masterballTexture, 10, Vector2f(24, 24), enemies[e].getPosition()));
 						}
 					}
 				}
@@ -293,20 +300,36 @@ void Game::update(float deltaTime)
 					multiplier = 0;
 					gameOver = true;
 				}
-				if (gameOver)
-				{
-					
-					if (Keyboard::isKeyPressed(Keyboard::Space))
-					{
-					goToMenu();
-					}
-				}
 			}
 			enemies.erase(enemies.begin() + e);
 			continue;
 		}
 	}
 #pragma endregion
+	if (gameOver)
+	{
+		for (size_t i = 0; i < textEvents.size(); i++)
+		{
+			switch (textEvents[i].key.code)
+			{
+			case 8://กด ลบ
+				playerName.pop_back();
+				break;
+			default:
+				playerName += (char)textEvents[i].key.code;
+				break;
+			}
+		}
+		nameText.setString(playerName + "_");
+		nameText.setOrigin(Vector2f(nameText.getGlobalBounds().width, nameText.getGlobalBounds().height) / 2.f);
+		nameText.setPosition(600, 660);
+		if (Keyboard::isKeyPressed(Keyboard::Enter))
+		{
+			//saveScore
+			Scene::index = 0;
+			//3 function 1.sort 2.read file 3. add score & save file
+		}
+	}
 }
 
 void Game::render()
@@ -350,8 +373,12 @@ void Game::render()
 	window->draw(infinity);
 	window->draw(ulCount);
 	window->draw(masCount);
-	window->draw(showGameOver);
-	textbox.drawOn(*window);
+	if (gameOver)
+	{
+		window->draw(showGameOver);
+		window->draw(nameText);
+	}
+
 }
 
 void Game::reset()
@@ -363,6 +390,8 @@ void Game::reset()
 	inGameTime = 0;
 	bossAlive = false;
 	gameOver = false;
+	multiplier = 1;
+
 
 	fireRate = 0.8;
 	fireSpawn = fireRate;
@@ -371,7 +400,7 @@ void Game::reset()
 	textScore.setPosition(Vector2f(30, 20));
 	textScore.setString("Score " + to_string(score));
 
-	cityHP = 5;
+	cityHP = 1;
 	HP.setPosition(Vector2f(30, 60));
 	HP.setString("HP " + to_string(cityHP));
 
@@ -392,27 +421,10 @@ void Game::reset()
 	getUltraballs.clear();
 	getMasterballs.clear();
 
-	
+
 	inGameTime = 0;
-	
-}
-
-void Game::goToMenu()
-{
-	Scene::index = 0;
-}
-
-void Game::checkSelect()
-{
-	if (Keyboard::isKeyPressed(Keyboard::Return))
-	{
-		textbox.setSelected(true);
-	}
-	else if (Keyboard::isKeyPressed(Keyboard::Escape))
-	{
-		textbox.setSelected(false);
-	}
 
 }
+
 
 
