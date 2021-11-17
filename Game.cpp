@@ -101,14 +101,13 @@ void Game::UpdateEnemyHpDown(int index)
 }
 
 
+
+
 //functions
 void Game::update(float deltaTime)
 {
 	inGameTime += deltaTime;
 	player.update(deltaTime);
-	//mousePos = (Vector2f)Mouse::getPosition(*window);
-	//typeName.update(mousePos, goToMenu, typeName.getString(), score, 0);//พอเป็นของเกม แล้ว แดง
-
 #pragma region Ball
 	fireSpawn += deltaTime;
 	//pokeball
@@ -180,7 +179,15 @@ void Game::update(float deltaTime)
 		if (player.getGlobalBounds().intersects(getUltraballs[u].getGlobalBounds()))
 		{
 			getUltraballs.erase(getUltraballs.begin() + u);
-			ultraballCount++;
+			int rate = randint(1, 3);
+			if (inGameTime <=60)
+			{
+				ultraballCount++;
+			}
+			else
+			{
+				ultraballCount += rate;
+			}
 			ulCount.setString(to_string(ultraballCount));
 		}
 	}
@@ -197,6 +204,12 @@ void Game::update(float deltaTime)
 		{
 			getMasterballs.erase(getMasterballs.begin() + m);
 			masterballCount++;
+			cityHP += 3;
+			/*int hpRate = randint(1, 2);
+			if (hpRate == 1)
+			{
+				cityHP += 3;
+			}*/
 			masCount.setString(to_string(masterballCount));
 		}
 	}
@@ -207,6 +220,7 @@ void Game::update(float deltaTime)
 	if (currentSpawn >= spawnRate && !bossAlive)
 	{
 		currentSpawn = 0;
+		int lvl = rand() % 2;
 		if (inGameTime >= 5 && inGameTime <= 30)
 		{
 			enemies.push_back(Enemy(&enemyTexture[0], Vector2f(randint(100, 1020), -75), Vector2f(70, 75), 200, 1));
@@ -214,26 +228,53 @@ void Game::update(float deltaTime)
 		}
 		else if (inGameTime >= 30 && inGameTime <= 60)
 		{
-			int lvl = rand() % 2;
 			enemies.push_back(Enemy(&enemyTexture[lvl], Vector2f(randint(100, 1020), -75), Vector2f(70, 75), 150, lvl + 1));
 		}
-		else if (inGameTime >= 60)
+		else if (inGameTime >= 60 && inGameTime <= 120)
 		{
-			int lvl = rand() % 2;
 			enemies.push_back(Enemy(&enemyTexture[lvl], Vector2f(randint(100, 1020), -75), Vector2f(70, 75), 150, lvl + 1));
 			enemies.push_back(Enemy(&enemyTexture[lvl], Vector2f(randint(100, 1020), -75), Vector2f(70, 75), 150, lvl + 1));
-			enemies.push_back(Enemy(&enemyTexture[0], Vector2f(randint(100, 1020), -75), Vector2f(70, 75), 200, 1));
 		}
+		else if (inGameTime >= 120 && inGameTime <= 250)
+		{
+			enemies.push_back(Enemy(&enemyTexture[1], Vector2f(randint(100, 1020), -75), Vector2f(70, 75), 120, 2));
+			enemies.push_back(Enemy(&enemyTexture[1], Vector2f(randint(100, 1020), -75), Vector2f(70, 75), 120, 2));
+			enemies.push_back(Enemy(&enemyTexture[0], Vector2f(randint(100, 1020), -75), Vector2f(70, 75), 150, 1));
+		}
+		else if (inGameTime >= 250)
+		{
+			enemies.push_back(Enemy(&enemyTexture[1], Vector2f(randint(100, 1020), -75), Vector2f(70, 75), 180, 2));
+			enemies.push_back(Enemy(&enemyTexture[1], Vector2f(randint(100, 1020), -75), Vector2f(70, 75), 180, 2));
+			enemies.push_back(Enemy(&enemyTexture[0], Vector2f(randint(100, 1020), -75), Vector2f(70, 75), 180, 1));
+			enemies.push_back(Enemy(&enemyTexture[lvl], Vector2f(randint(100, 1020), -75), Vector2f(70, 75), 150, lvl + 1));
+			enemies.push_back(Enemy(&enemyTexture[lvl], Vector2f(randint(100, 1020), -75), Vector2f(70, 75), 150, lvl + 1));
+		}	
 	}
 
 	legendSpawn += deltaTime;
-	if (legendSpawn >= legendRate && inGameTime >= 60)
+	if (legendSpawn >= legendRate && inGameTime >= 60 && inGameTime <= 90)
 	{
 		legendSpawn = 0;
 		enemies.push_back(Enemy(&enemyTexture[2], Vector2f(520, -185), Vector2f(180, 185), 50, 3));
 		legendRate = randint(40, 60);
 		bossAlive = true;
 	}
+	else if (legendSpawn >= legendRate && inGameTime >= 90 && inGameTime <= 150)
+	{
+		legendSpawn = 0;
+		enemies.push_back(Enemy(&enemyTexture[2], Vector2f(520, -185), Vector2f(180, 185), 100, 3));
+		legendRate = randint(50, 60);
+		bossAlive = true;
+	}
+	else if (legendSpawn >= legendRate && inGameTime >= 150)
+	{
+		legendSpawn = 0;
+		enemies.push_back(Enemy(&enemyTexture[2], Vector2f(400, -185), Vector2f(180, 185), 60, 3));
+		enemies.push_back(Enemy(&enemyTexture[2], Vector2f(800, -185), Vector2f(180, 185), 60, 3));
+		legendRate = randint(40, 60);
+		bossAlive = true;
+	}
+
 
 	for (size_t e = 0; e < enemies.size(); e++) // รัน enemy ทุกตัว
 	{
@@ -325,9 +366,11 @@ void Game::update(float deltaTime)
 		nameText.setPosition(600, 660);
 		if (Keyboard::isKeyPressed(Keyboard::Enter))
 		{
-			//saveScore
-			Scene::index = 0;
 			//3 function 1.sort 2.read file 3. add score & save file
+			//saveScore
+			leaderB.addScore(playerName,score);
+			leaderB.saveToFile("score.txt");
+			Scene::index = 0;
 		}
 	}
 }
@@ -391,7 +434,9 @@ void Game::reset()
 	bossAlive = false;
 	gameOver = false;
 	multiplier = 1;
-
+	playerName = " ";
+	nameText.setString(playerName + "_");
+	nameText.setOrigin(Vector2f(nameText.getGlobalBounds().width, nameText.getGlobalBounds().height) / 2.f);
 
 	fireRate = 0.8;
 	fireSpawn = fireRate;
@@ -400,7 +445,7 @@ void Game::reset()
 	textScore.setPosition(Vector2f(30, 20));
 	textScore.setString("Score " + to_string(score));
 
-	cityHP = 1;
+	cityHP = 5;
 	HP.setPosition(Vector2f(30, 60));
 	HP.setString("HP " + to_string(cityHP));
 

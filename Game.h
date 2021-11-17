@@ -6,6 +6,7 @@
 #include "Ball.h"
 #include "Item.h"
 #include "Scene.h"
+#include "LeaderBoard.h"
 class Game : public Scene
 {
 private :
@@ -28,6 +29,7 @@ private :
 	Text nameText;
 	
 	Vector2f mousePos;
+	Music battle;
 	
 	//Enemy
 	vector<Enemy> enemies;
@@ -73,14 +75,15 @@ private :
 	Texture sBoostTexture;
 	vector<Item>getUltraballs;
 	vector<Item>getMasterballs;
-	
 
-	//Vector2u enemyTextureSize;
+	//LeaderBoard
+	LeaderBoard leaderB;
 public :
 	Game(RenderWindow* window);
 	void UpdateEnemyHP(int index);
 	void UpdateEnemyHpDown(int index);
-	//void goToMenu(string str, int score, int scene);
+	inline string getName() { return this->playerName; }
+	inline int getScore() { return this->score; }
 	void update(float deltaTime);
 	void render();
 	void reset();

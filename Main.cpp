@@ -12,6 +12,14 @@ vector<Event> textEvents = {};
 int main()
 {
 	RenderWindow window(VideoMode(SCREEN_WIDTH,SCREEN_HEIGHT), "Game", Style::Titlebar | Style::Close);
+
+	Music music;
+	music.setVolume(10);
+	music.setLoop(true);
+	if (!music.openFromFile("sound/music.ogg"))
+		return -1; // error
+	music.play();
+
 	srand(time(0));
 	Game game(&window);
 	Menu menu(&window,&game);
@@ -36,7 +44,7 @@ int main()
 			{
 				if (ev.key.code == Keyboard::Escape)
 				{
-					window.close();
+					Scene::index = 0;
 				}
 				else if (ev.key.code == Keyboard::P)
 				{

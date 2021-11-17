@@ -4,12 +4,13 @@
 #include <vector>
 #include <string>
 #include <sstream>
+#include <fstream>
 #include <SFML/Graphics.hpp>
+#include <SFML/Audio.hpp>
 #include <SFML/System.hpp>
 #include <SFML/Window.hpp>
 #include <SFML/Audio.hpp>
 #include <SFML/Network.hpp>
-#include "LeaderBoard.h"
 #define SCREEN_WIDTH 1200
 #define SCREEN_HEIGHT 900
 
