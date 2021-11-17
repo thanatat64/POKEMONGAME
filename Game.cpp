@@ -204,12 +204,6 @@ void Game::update(float deltaTime)
 		{
 			getMasterballs.erase(getMasterballs.begin() + m);
 			masterballCount++;
-			cityHP += 3;
-			/*int hpRate = randint(1, 2);
-			if (hpRate == 1)
-			{
-				cityHP += 3;
-			}*/
 			masCount.setString(to_string(masterballCount));
 		}
 	}
@@ -301,9 +295,14 @@ void Game::update(float deltaTime)
 					}
 					if (enemies[e].getLevel() == 3)
 					{
+						int Bonus = randint(1, 3);
 						if (rate == 2)
 						{
 							getMasterballs.push_back(Item(&masterballTexture, 10, Vector2f(24, 24), enemies[e].getPosition()));
+						}
+						else if (rate == 1)
+						{
+							cityHP += Bonus;
 						}
 					}
 				}

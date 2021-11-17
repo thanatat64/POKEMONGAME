@@ -9,6 +9,7 @@ using namespace std;
 
 float multiplier = 1;
 vector<Event> textEvents = {};
+
 int main()
 {
 	RenderWindow window(VideoMode(SCREEN_WIDTH,SCREEN_HEIGHT), "Game", Style::Titlebar | Style::Close);

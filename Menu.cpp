@@ -25,7 +25,7 @@ Menu::Menu(RenderWindow* win, Game* g = nullptr)
 	htp.setup(Vector2f(1120, 820), Vector2f(50, 50), &pixelFont, " ? ", Color(0, 0, 0, 50), Color(0, 0, 0, 80), Color(0, 0, 0, 120));
 	exit.setup(Vector2f(140, 530), Vector2f(340, 95), &pixelFont, "Quit", Color(0, 0, 0, 50), Color(0, 0, 0, 80), Color(0, 0, 0, 120));
 	backToMenu.setup(Vector2f(110, 670), Vector2f(240, 80), &pixelFont, "Back to menu", Color(0, 0, 0, 50), Color(0, 0, 0, 80), Color(0, 0, 0, 120));
-	backToMenuhtp.setup(Vector2f(100, 730), Vector2f(240, 80), &pixelFont, "Back to menu", Color(0, 0, 0, 50), Color(0, 0, 0, 80), Color(0, 0, 0, 120));
+	backToMenuhtp.setup(Vector2f(45, 760), Vector2f(240, 80), &pixelFont, "Back to menu", Color(0, 0, 0, 50), Color(0, 0, 0, 80), Color(0, 0, 0, 120));
 
 	start.setFontSize(30);
 	scoreBoard.setFontSize(30);
